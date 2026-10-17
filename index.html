@@ -416,7 +416,8 @@ var QUESTIONS = [
     note: "Пять с половиной! Половинки тоже считаются." },
 
   { q: "Какого цвета у Мираши глазки?",
-    options: ["Голубые", "Карие", "Зелёные", "Серые"],
+    options: ["Голубые", "Зелёные", "Карие", "Серые"],
+    colors: ["#3fa2ee", "#5f9b3a", "#8a5a33", "#8c97a8"],
     correct: 0,
     photo: "assets/qeyes.jpg",
     note: "Голубые, как небо!" },
@@ -517,6 +518,7 @@ function renderQuestion() {
     var b = document.createElement("button");
     b.type = "button"; b.className = "opt"; b.dataset.k = k;
     var l = document.createElement("span"); l.className = "letter"; l.textContent = LETTERS[k];
+    if (q.colors) l.style.background = q.colors[k];
     var t = document.createElement("span"); t.className = "label"; t.textContent = text;
     var tag = document.createElement("span"); tag.className = "tag";
     b.appendChild(l); b.appendChild(t); b.appendChild(tag);
@@ -555,6 +557,7 @@ function choose(k) {
     } else {
       b.classList.add("dim");
     }
+    if (b.classList.contains("correct") || b.classList.contains("wrong") || b.classList.contains("also")) b.querySelector(".letter").style.background = "";
     if (idx === k && ok) b.querySelector(".letter").textContent = "✓";
     if (idx === k && !ok) b.querySelector(".letter").textContent = "✕";
     if (!all && idx === q.correct && !ok) b.querySelector(".letter").textContent = "✓";
