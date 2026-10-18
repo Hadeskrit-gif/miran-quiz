@@ -195,6 +195,8 @@ svg{display:block}
 .feedback.good .fb-head{color:var(--olive-d)}
 .feedback.bad .fb-head{color:var(--coral)}
 .fb-react{font-size:min(1.6vw,2.8vh);font-weight:800;margin-top:.6vh}
+.fb-extra{font-size:min(1.45vw,2.5vh);font-weight:800;color:var(--ink);margin-top:.6vh;line-height:1.25}
+.fb-extra:empty{display:none}
 .fb-note{font-size:min(1.4vw,2.4vh);font-weight:700;color:var(--ink-soft);margin-top:.5vh;line-height:1.3}
 .feedback .btn{flex:none;padding:1.5vh 1.5vw;font-size:min(1.3vw,2.4vh);box-shadow:0 .7vh 0 var(--gold-d)}
 
@@ -221,6 +223,7 @@ svg{display:block}
   .opt{min-height:8vh;font-size:min(4.6vw,2.8vh);gap:3vw;padding:1vh 3vw}
   .letter{width:5vh;height:5vh;font-size:min(4vw,2.4vh)}
   .opt .tag{font-size:min(2.6vw,1.6vh);right:3vw;padding:.3vh 2vw}
+  .fb-extra{font-size:min(3.8vw,2.2vh)}
   .fb-head{font-size:min(5.6vw,3.2vh)}.fb-react{font-size:min(3.8vw,2.3vh)}.fb-note{font-size:min(3.4vw,2vh)}
   .feedback{flex-wrap:wrap;gap:2vw}
   .feedback .owl{width:8vh;height:8vh}
@@ -334,6 +337,7 @@ svg{display:block}
           <div class="fb-head" id="fbHead"></div>
           <div class="fb-react" id="fbReact"></div>
           <div class="fb-note" id="fbNote"></div>
+          <div class="fb-extra" id="fbExtra"></div>
         </div>
         <button class="btn" id="btnNext" type="button"><span id="btnNextLabel">Следующий вопрос</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -389,7 +393,8 @@ var QUESTIONS = [
     options: ["Медведь", "Овца", "Лев", "«Нет»"],
     correct: "all",
     photo: "assets/q01.jpg",
-    note: "Мираша называет «бе» всё перечисленное: медведя, овцу, льва и даже «нет»!" },
+    note: "Мираша называет «бе» всё перечисленное: медведя, овцу, льва и даже «нет»!",
+    extra: "Мираша – сторонник универсальных названий 🐑😄" },
 
   { q: "Какого роста был Мираша при рождении?",
     options: ["45 см", "50 см", "52 см", "64 см"],
@@ -401,13 +406,15 @@ var QUESTIONS = [
     options: ["Ручку", "Ножку", "Головку", "Попку"],
     correct: 1,
     photo: "assets/qbirth.jpg",
-    note: "Первой мама увидела ножку!" },
+    note: "Первой мама увидела ножку!",
+    extra: "Самая маленькая, самая сладкая ножка 🦶💛" },
 
   { q: "В какой праздник мама и папа Мираши увидели две полоски и узнали, что у них будет малыш?",
     options: ["Новый год", "День святого Валентина", "Навруз (Нооруз)", "День рождения мамы"],
     correct: 2,
     photo: "assets/q03.jpg",
-    note: "Две полоски появились на Навруз (Нооруз)." },
+    note: "Две полоски появились на Навруз (Нооруз).",
+    extra: "Мираша выбрал лучший день, день весны и новой жизни 🌷✨" },
 
   { q: "Сколько у Мираши сегодня зубов?",
     options: ["4", "4 с половиной", "5", "5 с половиной", "6"],
@@ -432,13 +439,15 @@ var QUESTIONS = [
     options: ["Кошка: «мяу»", "Собака: «гав»", "Лошадка: «пр-р-р» губами", "Корова: «му-у»"],
     correct: 2,
     photo: "assets/q06.jpg",
-    note: "Первой была лошадка: «пр-р-р» губами." },
+    note: "Первой была лошадка: «пр-р-р» губами.",
+    extra: "Настоящий кыргызский всадник! 🐎🏇" },
 
   { q: "Как Мираша называет своих котиков?",
     options: ["Мяу", "Кы", "Фыр", "Бу"],
     correct: 1,
     photo: "assets/q07.jpg",
-    note: "Котиков Мираша называет «Кы»." },
+    note: "Котиков Мираша называет «Кы».",
+    extra: "Кы – это почти КЫса 🐱😻" },
 
   { q: "Что Мираша впервые попробовал из еды?",
     options: ["Банан", "Кабачок", "Яблоко", "Морковь"],
@@ -450,7 +459,13 @@ var QUESTIONS = [
     options: ["Алан", "Алек", "Аластор", "Аладдин"],
     correct: 0,
     photo: "assets/q09.jpg",
-    note: "Второе имя Мираши: Алан." },
+    note: "Второе имя Мираши: Алан.",
+    extraOpt: [
+      "Да, почти как Алан Рикман, Алан Тьюринг или Эдгар Алан По 🎭💻🪶",
+      "Нет, Мираша – не Алек Болдуин 🎬",
+      "Нет, Мираша не возглавляет мракоборцев 🪄⚡",
+      "Нет, Мираша не воришка из Аграбы 🧞‍♂️🪔"
+    ] },
 
   { q: "Какая у Мираши любимая ягода?",
     options: ["Клубника", "Малина", "Черника", "Ежевика"],
@@ -578,6 +593,7 @@ function choose(k) {
     $("fbReact").textContent = pick(OOPS);
   }
   $("fbNote").textContent = q.note;
+  $("fbExtra").textContent = q.extraOpt ? q.extraOpt[k] : (q.extra || "");
   void fb.offsetWidth;
   fb.classList.add("on");
 
